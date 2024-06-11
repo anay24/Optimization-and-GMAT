@@ -1,0 +1,102 @@
+% CREATE OPTIMIZATION PROBLEM
+prob = optimproblem;
+
+% DEFINE OPTIMIZATION VARIABLES
+x1 = optimvar("x1","LowerBound",0,"UpperBound",80);
+x2 = optimvar("x2","LowerBound",0,"UpperBound",80);
+
+% DEFINE INTERMEDIATE VARIABLES
+y1 = x1*x2;
+y2 = y1*x1;
+y3 = x2*x2;
+y4 = x1*x1;
+
+% DEFINE OBJECTIVE FUNCTION
+obj = fcn2optimexpr(@objfun,x1,x2);
+prob.Objective = obj;
+
+% CONSTRAINT g3
+constr = (x1/500) - 0.11 - ((x2/50) - 1).^2 <= 0;
+prob.Constraints.gthreeConstr = constr;
+
+% CONSTRAINT g2
+constr2 = (y4/625) - (x2/5) <= 0;
+prob.Constraints.gtwoConstr = constr2;
+
+% CONSTRAINT g1
+constr3 = 1 - (y1/700) <= 0;
+prob.Constraints.goneConstr = constr3;
+
+% DISPLAY THE OPTIMIZATION PROBLEM
+showproblem(prob)
+
+% INITIAL GUESS FOR THE SOLVER
+x0.x1 = 50;
+x0.x2 = 50;
+
+% SOLVE THE OPTIMIZATION PROBLEM
+[sol,fval,exitflag] = solve(prob,x0);
+
+% ANOTHER INITIAL GUESS FOR COMPARISON
+x0.x1 = 20;
+x0.x2 = 50;
+
+% SOLVE WITH A DIFFERENT INITIAL GUESS
+[sol2,fval2,exitflag2,output] = solve(prob,x0);
+
+% DEFINE FUNCTIONS FOR PLOTTING
+f = @objfun;
+g = @(x1,x2) (x1/500) - 0.11 - ((x2/50) - 1)^2;
+h = @(x1,x2) ((x1*x1)/625) - (x2/5);
+i = @(x1,x2) 1 - ((x1*x2)/700);
+
+% PLOT CONSTRAINTS AND OBJECTIVE FUNCTION
+fimplicit(g,'k-')
+
+hold on
+fimplicit(h,'k-')
+fimplicit(i,'k-')
+fcontour(f)
+plot(sol.x1,sol.x2,'ro','LineWidth',2) % Global solution
+plot(sol2.x1,sol2.x2,'ko','LineWidth',2) % Local solution
+
+% ADD LEGEND AND LABELS
+legend('Constraint','Constraint 2','Constraint 3','f Contours','Global Solution','Local Solution','Location','northeast');
+hold off
+
+% DEFINE THE OBJECTIVE FUNCTION
+function f = objfun(x1,x2)
+    % COEFFICIENTS FOR THE OBJECTIVE FUNCTION
+    a1 = 75.196;
+    a2 = -3.8112;
+    a3 = 0.12694;
+    a4 = -2.0567*10.^-3;
+    a5 = 1.0345*10.^-5; 
+    a6 = -6.8306;
+    a7 = 0.030234; 
+    a8 = -1.28134*10.^-3;
+    a9 = 3.5256*10.^-5; 
+    a10 = -2.266*10.^-7;
+    a11 = 0.25645; 
+    a12 = -3.4604*10.^-3;
+    a13 = 1.3514*10.^-5; 
+    a14 = -28.106;
+    a15 = -5.2375*10.^-6; 
+    a16 = -6.3*10.^-8;
+    a17 = 7.0*10.^-10; 
+    a18 = 3.4054*10.^-4;
+    a19 = -1.6638*10.^-6; 
+    a20 = -2.8673;
+    a21 = 0.0005;
+
+    % DEFINE INTERMEDIATE VARIABLES
+    y1 = x1*x2;
+    y2 = y1*x1;
+    y3 = x2*x2;
+    y4 = x1*x1;
+
+    % OBJECTIVE FUNCTION EXPRESSION
+    f = a1 + a2*x1 + a3*y4 + a4*y4*x1 + a5*y4*y4 + a6*x2 + a7*y1 ... 
+    + a8*x1*y1 + a9*y1*y4 + a10*y2*y4 + a11*y3 + a12*x2*y3 + a13*y3*y3 + a14./(x2 + 1) ...
+    + a15*y3*y4 + a16*y1*y4*x2 + a17*y1*y3*y4 + a18*x1*y3 + a19*y1*y3 + a20*exp(a21*y1);
+end
