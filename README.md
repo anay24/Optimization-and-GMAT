@@ -1,9 +1,10 @@
 Solo Projects done in Georgia Institute of Technology Course - AE4321 Space Design I
 
-Objective: Design constrained and unconstrained optimization programs as well as different orbits in GMAT
+Objective:The primary goal was to design and implement optimization algorithms, specifically constrained and unconstrained optimization programs, using the Powell and Fletcher-Reeves Methods. Additionally, I aimed to gain proficiency in the use of GMAT (General Mission Analysis Tool) to design orbital trajectories, focusing on two specific orbital configurations: the Tundra orbit and the Mars B-plane orbit.
 
-Method: Using MATLAB and GMAT software programs
+Method: For optimization, the Powell Method implemented this derivative-free optimization technique to handle unconstrained problems. It was particularly useful for solving multi-variable, nonlinear problems. The Fletcher-Reeves Method used this gradient-based optimization method within the Conjugate Gradient framework to solve constrained problems. MATLAB served as the primary platform for implementing optimization algorithms and performing numerical simulations. Key functions from MATLAB's Optimization Toolbox were adapted and extended for specific applications. For orbital trajectory analysis, GMAT utilized for designing, simulating, and visualizing orbital trajectories. Developed and executed scripts within GMAT to model both the Tundra orbit and the Mars B-plane trajectory. MATLAB’s official documentation and online forums provided insights into troubleshooting and enhancing algorithmic performance while GMAT’s programming and scripting guides were leveraged to customize orbital simulation parameters and validate mission feasibility.
 
-Results: Working models for equations for the optimization projects and complete mission cycles for the GMAT programs
+Results: For optimization, I successfully developed robust mathematical models for constrained and unconstrained optimization problems. The Powell and Fletcher-Reeves methods were validated against benchmark test functions, ensuring their effectiveness in finding global or local optima. For GMAT, I designed a Tundra orbit with precise specifications, demonstrating its suitability for high-latitude coverage applications, such as telecommunications.
+Created a Mars B-plane orbit simulation, which can be used for interplanetary mission planning and spacecraft navigation.
 
-Implications: These skills can be applied to more nuanced projects
+Implications: Mastery of MATLAB and GMAT provides a strong foundation for tackling more nuanced and large-scale project. These projects have deepened my understanding of optimization methods and orbital mechanics.
